@@ -1,0 +1,27 @@
+name: flutter_pokedex
+description: Pokedex using PokeAPI
+version: 1.0.0
+publish_to: none
+
+environment:
+  sdk: ">=3.1.0 <4.0.0"
+
+dependencies:
+  bloc: 8.1.2
+  flutter:
+    sdk: flutter
+  flutter_bloc: 8.1.3
+  flutter_localizations:
+    sdk: flutter
+  intl: 0.18.1
+
+dev_dependencies:
+  bloc_test: 9.1.5
+  flutter_test:
+    sdk: flutter
+  lint: 2.1.2
+  mocktail: 1.0.1
+
+flutter:
+  uses-material-design: true
+  generate: true
