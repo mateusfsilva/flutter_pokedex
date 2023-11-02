@@ -5,22 +5,30 @@ import 'package:test/test.dart';
 
 void main() {
   const id = 1;
+  const order = 1;
   const name = 'bulbasaur';
+  const baseExperience = 64;
   const type01 = 'grass';
   const type02 = 'poison';
   const height = 7;
   const weight = 69;
+  const hpStatName = 'hp';
   const hp = 45;
+  const attackStatName = 'attack';
   const attack = 49;
+  const defenseStatName = 'defense';
   const defense = 49;
+  const specialAttackStatName = 'special-attack';
   const specialAttack = 65;
+  const specialDefenseStatName = 'special-defense';
   const specialDefense = 65;
+  const speedStatName = 'speed';
   const speed = 45;
   const sprite =
       'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/1.png';
   const pokemonMap = <String, dynamic>{
     'abilities': [],
-    'base_experience': 64,
+    'base_experience': baseExperience,
     'forms': [],
     'game_indices': [],
     'height': height,
@@ -31,7 +39,7 @@ void main() {
         'https://pokeapi.co/api/v2/pokemon/1/encounters',
     'moves': [],
     'name': name,
-    'order': 1,
+    'order': order,
     'past_abilities': [],
     'past_types': [],
     'species': {},
@@ -74,23 +82,32 @@ void main() {
       {
         'base_stat': hp,
         'effort': 0,
-        'stat': {'name': 'hp', 'url': 'https://pokeapi.co/api/v2/stat/1/'},
+        'stat': {
+          'name': hpStatName,
+          'url': 'https://pokeapi.co/api/v2/stat/1/',
+        },
       },
       {
         'base_stat': attack,
         'effort': 0,
-        'stat': {'name': 'attack', 'url': 'https://pokeapi.co/api/v2/stat/2/'},
+        'stat': {
+          'name': attackStatName,
+          'url': 'https://pokeapi.co/api/v2/stat/2/',
+        },
       },
       {
         'base_stat': defense,
         'effort': 0,
-        'stat': {'name': 'defense', 'url': 'https://pokeapi.co/api/v2/stat/3/'},
+        'stat': {
+          'name': defenseStatName,
+          'url': 'https://pokeapi.co/api/v2/stat/3/',
+        },
       },
       {
         'base_stat': specialAttack,
         'effort': 1,
         'stat': {
-          'name': 'special-attack',
+          'name': specialAttackStatName,
           'url': 'https://pokeapi.co/api/v2/stat/4/',
         },
       },
@@ -98,14 +115,17 @@ void main() {
         'base_stat': specialDefense,
         'effort': 0,
         'stat': {
-          'name': 'special-defense',
+          'name': specialDefenseStatName,
           'url': 'https://pokeapi.co/api/v2/stat/5/',
         },
       },
       {
         'base_stat': speed,
         'effort': 0,
-        'stat': {'name': 'speed', 'url': 'https://pokeapi.co/api/v2/stat/6/'},
+        'stat': {
+          'name': speedStatName,
+          'url': 'https://pokeapi.co/api/v2/stat/6/',
+        },
       }
     ],
     'types': [
@@ -121,58 +141,129 @@ void main() {
     'weight': weight,
   };
 
+  final types = [
+    Type(slot: 1, type: SimpleDescription(name: type01)),
+    Type(slot: 2, type: SimpleDescription(name: type02)),
+  ];
+  final hpStat = StatElement(
+    baseStat: hp,
+    effort: 0,
+    stat: SimpleDescription(name: hpStatName),
+  );
+  final attackStat = StatElement(
+    baseStat: attack,
+    effort: 0,
+    stat: SimpleDescription(name: attackStatName),
+  );
+  final defenseStat = StatElement(
+    baseStat: defense,
+    effort: 0,
+    stat: SimpleDescription(name: defenseStatName),
+  );
+  final specialAttackStat = StatElement(
+    baseStat: specialAttack,
+    effort: 1,
+    stat: SimpleDescription(name: specialAttackStatName),
+  );
+  final specialDefenseStat = StatElement(
+    baseStat: specialDefense,
+    effort: 0,
+    stat: SimpleDescription(name: specialDefenseStatName),
+  );
+  final speedStat = StatElement(
+    baseStat: speed,
+    effort: 0,
+    stat: SimpleDescription(name: speedStatName),
+  );
+  final stats = [
+    hpStat,
+    attackStat,
+    defenseStat,
+    specialAttackStat,
+    specialDefenseStat,
+    speedStat,
+  ];
+
   test('Test the default initializer', () {
     final pokemon01 = Pokemon(
       id: id,
+      order: order,
       name: name,
-      types: [
-        PokemonType.fromValue(type01),
-        PokemonType.fromValue(type02),
-      ],
+      baseExperience: baseExperience,
+      types: types,
       height: height,
       weight: weight,
-      hp: hp,
-      attack: attack,
-      defense: defense,
-      specialAttack: specialAttack,
-      specialDefense: specialDefense,
-      speed: speed,
-      sprite: sprite,
+      stats: stats,
+      sprites: Sprites(
+        other: Other(
+          officialArtwork: OfficialArtwork(frontDefault: sprite),
+        ),
+      ),
     );
 
     expect(pokemon01.id, id);
+    expect(pokemon01.order, order);
     expect(pokemon01.name, name);
+    expect(pokemon01.baseExperience, baseExperience);
     expect(pokemon01.types.length, 2);
-    expect(pokemon01.types[0].value, type01);
-    expect(pokemon01.types[1].value, type02);
+    expect(pokemon01.types[0].type.name, type01);
+    expect(pokemon01.types[1].type.name, type02);
     expect(pokemon01.height, height);
     expect(pokemon01.weight, weight);
-    expect(pokemon01.hp, hp);
-    expect(pokemon01.attack, attack);
-    expect(pokemon01.defense, defense);
-    expect(pokemon01.specialAttack, specialAttack);
-    expect(pokemon01.specialDefense, specialDefense);
-    expect(pokemon01.speed, speed);
-    expect(pokemon01.sprite, sprite);
+    expect(
+      pokemon01.stats.where((s) => s.stat.name == hpStatName).first.baseStat,
+      hp,
+    );
+    expect(
+      pokemon01.stats
+          .where((s) => s.stat.name == attackStatName)
+          .first
+          .baseStat,
+      attack,
+    );
+    expect(
+      pokemon01.stats
+          .where((s) => s.stat.name == defenseStatName)
+          .first
+          .baseStat,
+      defense,
+    );
+    expect(
+      pokemon01.stats
+          .where((s) => s.stat.name == specialAttackStatName)
+          .first
+          .baseStat,
+      specialAttack,
+    );
+    expect(
+      pokemon01.stats
+          .where((s) => s.stat.name == specialDefenseStatName)
+          .first
+          .baseStat,
+      specialDefense,
+    );
+    expect(
+      pokemon01.stats.where((s) => s.stat.name == speedStatName).first.baseStat,
+      speed,
+    );
+    expect(pokemon01.sprites.other.officialArtwork.frontDefault, sprite);
   });
 
   test('Test initialize from a map', () {
     final pokemon01 = Pokemon(
       id: id,
+      order: order,
       name: name,
-      types: [
-        PokemonType.fromValue(type01),
-        PokemonType.fromValue(type02),
-      ],
+      baseExperience: baseExperience,
+      types: types,
       height: height,
       weight: weight,
-      hp: hp,
-      attack: attack,
-      defense: defense,
-      specialAttack: specialAttack,
-      specialDefense: specialDefense,
-      speed: speed,
-      sprite: sprite,
+      stats: stats,
+      sprites: Sprites(
+        other: Other(
+          officialArtwork: OfficialArtwork(frontDefault: sprite),
+        ),
+      ),
     );
     final pokemon02 = Pokemon.fromMap(pokemonMap);
 
@@ -182,29 +273,21 @@ void main() {
   test('Test initialize from a json', () {
     final pokemon01 = Pokemon(
       id: id,
+      order: order,
       name: name,
-      types: [
-        PokemonType.fromValue(type01),
-        PokemonType.fromValue(type02),
-      ],
+      baseExperience: baseExperience,
+      types: types,
       height: height,
       weight: weight,
-      hp: hp,
-      attack: attack,
-      defense: defense,
-      specialAttack: specialAttack,
-      specialDefense: specialDefense,
-      speed: speed,
-      sprite: sprite,
+      stats: stats,
+      sprites: Sprites(
+        other: Other(
+          officialArtwork: OfficialArtwork(frontDefault: sprite),
+        ),
+      ),
     );
     final pokemon02 = Pokemon.fromJson(jsonEncode(pokemonMap));
 
     expect(pokemon01, equals(pokemon02));
-  });
-
-  test('Test an invalid pokemon type', () {
-    final pokemonType = PokemonType.fromValue('invalid-type');
-
-    expect(pokemonType, equals(PokemonType.unknown));
   });
 }

@@ -167,22 +167,30 @@ void main() {
 
   group('Test getPokemon', () {
     const id = 1;
+    const order = 1;
     const name = 'bulbasaur';
+    const baseExperience = 64;
     const type01 = 'grass';
     const type02 = 'poison';
     const height = 7;
     const weight = 69;
+    const hpStatName = 'hp';
     const hp = 45;
+    const attackStatName = 'attack';
     const attack = 49;
+    const defenseStatName = 'defense';
     const defense = 49;
+    const specialAttackStatName = 'special-attack';
     const specialAttack = 65;
+    const specialDefenseStatName = 'special-defense';
     const specialDefense = 65;
+    const speedStatName = 'speed';
     const speed = 45;
     const sprite =
         'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/1.png';
     const pokemonMap = <String, dynamic>{
       'abilities': [],
-      'base_experience': 64,
+      'base_experience': baseExperience,
       'forms': [],
       'game_indices': [],
       'height': height,
@@ -193,7 +201,7 @@ void main() {
           'https://pokeapi.co/api/v2/pokemon/1/encounters',
       'moves': [],
       'name': name,
-      'order': 1,
+      'order': order,
       'past_abilities': [],
       'past_types': [],
       'species': {},
@@ -236,13 +244,16 @@ void main() {
         {
           'base_stat': hp,
           'effort': 0,
-          'stat': {'name': 'hp', 'url': 'https://pokeapi.co/api/v2/stat/1/'},
+          'stat': {
+            'name': hpStatName,
+            'url': 'https://pokeapi.co/api/v2/stat/1/',
+          },
         },
         {
           'base_stat': attack,
           'effort': 0,
           'stat': {
-            'name': 'attack',
+            'name': attackStatName,
             'url': 'https://pokeapi.co/api/v2/stat/2/',
           },
         },
@@ -250,7 +261,7 @@ void main() {
           'base_stat': defense,
           'effort': 0,
           'stat': {
-            'name': 'defense',
+            'name': defenseStatName,
             'url': 'https://pokeapi.co/api/v2/stat/3/',
           },
         },
@@ -258,7 +269,7 @@ void main() {
           'base_stat': specialAttack,
           'effort': 1,
           'stat': {
-            'name': 'special-attack',
+            'name': specialAttackStatName,
             'url': 'https://pokeapi.co/api/v2/stat/4/',
           },
         },
@@ -266,14 +277,17 @@ void main() {
           'base_stat': specialDefense,
           'effort': 0,
           'stat': {
-            'name': 'special-defense',
+            'name': specialDefenseStatName,
             'url': 'https://pokeapi.co/api/v2/stat/5/',
           },
         },
         {
           'base_stat': speed,
           'effort': 0,
-          'stat': {'name': 'speed', 'url': 'https://pokeapi.co/api/v2/stat/6/'},
+          'stat': {
+            'name': speedStatName,
+            'url': 'https://pokeapi.co/api/v2/stat/6/',
+          },
         }
       ],
       'types': [
@@ -314,19 +328,67 @@ void main() {
         result,
         isA<Pokemon>()
             .having((p) => p.id, 'id', id)
+            .having((p) => p.order, 'order', order)
             .having((p) => p.name, 'name', name)
+            .having((p) => p.baseExperience, 'baseExperience', baseExperience)
             .having((p) => p.types.length, 'types.length', 2)
-            .having((p) => p.types[0].value, 'types[0].value', type01)
-            .having((p) => p.types[1].value, 'types[1].value', type02)
+            .having((p) => p.types[0].type.name, 'types[0].type.name', type01)
+            .having((p) => p.types[1].type.name, 'types[1].type.name', type02)
             .having((p) => p.height, 'height', height)
             .having((p) => p.weight, 'weight', weight)
-            .having((p) => p.hp, 'hp', hp)
-            .having((p) => p.attack, 'attack', attack)
-            .having((p) => p.defense, 'defense', defense)
-            .having((p) => p.specialAttack, 'specialAttack', specialAttack)
-            .having((p) => p.specialDefense, 'specialDefense', specialDefense)
-            .having((p) => p.speed, 'speed', speed)
-            .having((p) => p.sprite, 'sprite', sprite),
+            .having(
+              (p) => p.stats
+                  .where((s) => s.stat.name == hpStatName)
+                  .first
+                  .baseStat,
+              'hp',
+              hp,
+            )
+            .having(
+              (p) => p.stats
+                  .where((s) => s.stat.name == attackStatName)
+                  .first
+                  .baseStat,
+              'attack',
+              attack,
+            )
+            .having(
+              (p) => p.stats
+                  .where((s) => s.stat.name == defenseStatName)
+                  .first
+                  .baseStat,
+              'defense',
+              defense,
+            )
+            .having(
+              (p) => p.stats
+                  .where((s) => s.stat.name == specialAttackStatName)
+                  .first
+                  .baseStat,
+              'specialAttack',
+              specialAttack,
+            )
+            .having(
+              (p) => p.stats
+                  .where((s) => s.stat.name == specialDefenseStatName)
+                  .first
+                  .baseStat,
+              'specialDefense',
+              specialDefense,
+            )
+            .having(
+              (p) => p.stats
+                  .where((s) => s.stat.name == speedStatName)
+                  .first
+                  .baseStat,
+              'speed',
+              speed,
+            )
+            .having(
+              (p) => p.sprites.other.officialArtwork.frontDefault,
+              'sprite',
+              sprite,
+            ),
       );
     });
 

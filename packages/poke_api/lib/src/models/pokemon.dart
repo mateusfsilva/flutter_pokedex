@@ -1,135 +1,175 @@
-import 'dart:convert' show jsonDecode;
-
 import 'package:deep_pick/deep_pick.dart';
 import 'package:equatable/equatable.dart';
 
 class Pokemon with EquatableMixin {
   Pokemon({
     required this.id,
+    required this.order,
     required this.name,
-    required this.types,
+    required this.baseExperience,
     required this.height,
     required this.weight,
-    required this.hp,
-    required this.attack,
-    required this.defense,
-    required this.specialAttack,
-    required this.specialDefense,
-    required this.speed,
-    required this.sprite,
+    required this.sprites,
+    required this.stats,
+    required this.types,
   });
+
+  factory Pokemon.fromJson(String json) =>
+      Pokemon.fromPick(pickFromJson(json).required());
 
   factory Pokemon.fromMap(Map<String, dynamic> map) =>
       Pokemon.fromPick(pick(map).required());
 
-  factory Pokemon.fromJson(String json) => Pokemon.fromMap(
-        jsonDecode(json) as Map<String, dynamic>,
-      );
-
   factory Pokemon.fromPick(RequiredPick pick) => Pokemon(
         id: pick('id').asIntOrThrow(),
+        order: pick('order').asIntOrThrow(),
         name: pick('name').asStringOrThrow(),
-        types: pick('types').asListOrThrow(
-          (pick) => PokemonType.fromValue(
-            pick('type')('name').asStringOrThrow(),
-          ),
-        ),
+        baseExperience: pick('base_experience').asIntOrThrow(),
         height: pick('height').asIntOrThrow(),
         weight: pick('weight').asIntOrThrow(),
-        hp: pick('stats').letOrThrow(
-          (pick) => _getStats(pick, stat: 'hp'),
+        sprites: Sprites.fromPick(pick('sprites').required()),
+        stats: pick('stats').asListOrThrow(
+          (pick) => StatElement.fromPick(pick),
         ),
-        attack: pick('stats').letOrThrow(
-          (pick) => _getStats(pick, stat: 'attack'),
-        ),
-        defense: pick('stats').letOrThrow(
-          (pick) => _getStats(pick, stat: 'defense'),
-        ),
-        specialAttack: pick('stats').letOrThrow(
-          (pick) => _getStats(pick, stat: 'special-attack'),
-        ),
-        specialDefense: pick('stats').letOrThrow(
-          (pick) => _getStats(pick, stat: 'special-defense'),
-        ),
-        speed: pick('stats').letOrThrow(
-          (pick) => _getStats(pick, stat: 'speed'),
-        ),
-        sprite: pick('sprites')('other')('official-artwork')('front_default')
-            .asStringOrThrow(),
+        types: pick('types').asListOrThrow((pick) => Type.fromPick(pick)),
       );
 
   final int id;
+  final int order;
   final String name;
-  final List<PokemonType> types;
+  final int baseExperience;
   final int height;
   final int weight;
-  final int hp;
-  final int attack;
-  final int defense;
-  final int specialAttack;
-  final int specialDefense;
-  final int speed;
-  final String sprite;
-
-  static int _getStats(
-    RequiredPick pick, {
-    required String stat,
-  }) {
-    int value = 0;
-
-    pick.asListOrThrow((p) {
-      if (p('stat')('name').asStringOrThrow() == stat) {
-        value = p('base_stat').asIntOrThrow();
-      }
-    });
-
-    return value;
-  }
+  final Sprites sprites;
+  final List<StatElement> stats;
+  final List<Type> types;
 
   @override
   List<Object?> get props => [
         id,
+        order,
         name,
-        types,
+        baseExperience,
         height,
         weight,
-        hp,
-        attack,
-        defense,
-        specialAttack,
-        specialDefense,
-        speed,
+        sprites,
+        stats,
+        types,
       ];
 }
 
-enum PokemonType {
-  normal('normal'),
-  fighting('fighting'),
-  flying('flying'),
-  poison('poison'),
-  ground('ground'),
-  rock('rock'),
-  bug('bug'),
-  ghost('ghost'),
-  steel('steel'),
-  fire('fire'),
-  water('water'),
-  grass('grass'),
-  electric('electric'),
-  psychic('psychic'),
-  ice('ice'),
-  dragon('dragon'),
-  dark('dark'),
-  fairy('fairy'),
-  unknown('unknown'),
-  shadow('shadow');
+class Sprites with EquatableMixin {
+  Sprites({
+    required this.other,
+  });
 
-  const PokemonType(this.value);
-
-  final String value;
-
-  factory PokemonType.fromValue(String value) => PokemonType.values.firstWhere(
-        (type) => type.value == value,
-        orElse: () => PokemonType.unknown,
+  factory Sprites.fromPick(RequiredPick pick) => Sprites(
+        other: Other.fromPick(pick('other').required()),
       );
+
+  final Other other;
+
+  @override
+  List<Object?> get props => [
+        other,
+      ];
+}
+
+class Other with EquatableMixin {
+  Other({
+    required this.officialArtwork,
+  });
+
+  factory Other.fromPick(RequiredPick pick) => Other(
+        officialArtwork: OfficialArtwork.fromPick(
+          pick('official-artwork').required(),
+        ),
+      );
+
+  final OfficialArtwork officialArtwork;
+
+  @override
+  List<Object?> get props => [
+        officialArtwork,
+      ];
+}
+
+class OfficialArtwork with EquatableMixin {
+  OfficialArtwork({
+    required this.frontDefault,
+  });
+
+  factory OfficialArtwork.fromPick(RequiredPick pick) => OfficialArtwork(
+        frontDefault: pick('front_default').asStringOrThrow(),
+      );
+
+  final String frontDefault;
+
+  @override
+  List<Object?> get props => [
+        frontDefault,
+      ];
+}
+
+class StatElement with EquatableMixin {
+  StatElement({
+    required this.baseStat,
+    required this.effort,
+    required this.stat,
+  });
+
+  factory StatElement.fromPick(RequiredPick pick) => StatElement(
+        baseStat: pick('base_stat').asIntOrThrow(),
+        effort: pick('effort').asIntOrThrow(),
+        stat: SimpleDescription.fromPick(pick('stat').required()),
+      );
+
+  final int baseStat;
+  final int effort;
+  final SimpleDescription stat;
+
+  @override
+  List<Object?> get props => [
+        baseStat,
+        effort,
+        stat,
+      ];
+}
+
+class SimpleDescription with EquatableMixin {
+  SimpleDescription({
+    required this.name,
+  });
+
+  factory SimpleDescription.fromPick(RequiredPick pick) => SimpleDescription(
+        name: pick('name').asStringOrThrow(),
+      );
+
+  final String name;
+
+  @override
+  List<Object?> get props => [
+        name,
+      ];
+}
+
+class Type with EquatableMixin {
+  Type({
+    required this.slot,
+    required this.type,
+  });
+
+  factory Type.fromPick(RequiredPick pick) => Type(
+        slot: pick('slot').asIntOrThrow(),
+        type: SimpleDescription.fromPick(pick('type').required()),
+      );
+
+  final int slot;
+  final SimpleDescription type;
+
+  @override
+  List<Object?> get props => [
+        slot,
+        type,
+      ];
 }
