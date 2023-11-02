@@ -1,6 +1,6 @@
-import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter_pokedex/app/app.dart';
 import 'package:flutter_pokedex/counter/counter.dart';
+import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   group('App', () {
