@@ -14,8 +14,8 @@ dependencies:
   flutter_localizations:
     sdk: flutter
   intl: 0.18.1
-  poke_api:
-    path: packages/poke_api
+  pokedex_repository:
+    path: packages/pokedex_repository
 
 dev_dependencies:
   bloc_test: 9.1.5

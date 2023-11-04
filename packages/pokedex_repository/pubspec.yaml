@@ -1,0 +1,19 @@
+name: pokedex_repository
+description: Access the Pokemon data
+version: 0.1.0
+publish_to: none
+
+environment:
+  sdk: ">=3.1.0 <4.0.0"
+
+dependencies:
+  deep_pick: 1.0.0
+  equatable: 2.0.5
+  poke_api:
+    path: ../poke_api
+
+dev_dependencies:
+  equatable_lint: 0.2.1
+  lint: 2.1.2
+  mocktail: 1.0.1
+  test: 1.24.3
