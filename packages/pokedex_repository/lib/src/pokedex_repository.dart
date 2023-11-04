@@ -60,6 +60,7 @@ class PokedexRepository {
               .where((stat) => stat.stat.name == 'speed')
               .first
               .baseStat,
+          icon: poke.sprites.frontDefault,
           sprite: poke.sprites.other.officialArtwork.frontDefault,
         ),
       );

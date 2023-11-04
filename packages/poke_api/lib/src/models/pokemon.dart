@@ -60,17 +60,21 @@ class Pokemon with EquatableMixin {
 
 class Sprites with EquatableMixin {
   Sprites({
+    required this.frontDefault,
     required this.other,
   });
 
   factory Sprites.fromPick(RequiredPick pick) => Sprites(
+        frontDefault: pick('front_default').asStringOrThrow(),
         other: Other.fromPick(pick('other').required()),
       );
 
+  final String frontDefault;
   final Other other;
 
   @override
   List<Object?> get props => [
+        frontDefault,
         other,
       ];
 }

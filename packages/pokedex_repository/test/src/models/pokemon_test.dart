@@ -16,6 +16,8 @@ void main() {
   const specialAttack = 65;
   const specialDefense = 65;
   const speed = 45;
+  const icon =
+      'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png';
   const sprite =
       'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/1.png';
   const pokemonMap = <String, dynamic>{
@@ -33,6 +35,7 @@ void main() {
       type01,
       type02,
     ],
+    'icon': icon,
     'weight': weight,
   };
 
@@ -52,6 +55,7 @@ void main() {
       specialAttack: specialAttack,
       specialDefense: specialDefense,
       speed: speed,
+      icon: icon,
       sprite: sprite,
     );
 
@@ -68,6 +72,7 @@ void main() {
     expect(pokemon01.specialAttack, specialAttack);
     expect(pokemon01.specialDefense, specialDefense);
     expect(pokemon01.speed, speed);
+    expect(pokemon01.icon, icon);
     expect(pokemon01.sprite, sprite);
   });
 
@@ -87,6 +92,7 @@ void main() {
       specialAttack: specialAttack,
       specialDefense: specialDefense,
       speed: speed,
+      icon: icon,
       sprite: sprite,
     );
     final pokemon02 = Pokemon.fromMap(pokemonMap);
@@ -110,6 +116,7 @@ void main() {
       specialAttack: specialAttack,
       specialDefense: specialDefense,
       speed: speed,
+      icon: icon,
       sprite: sprite,
     );
     final pokemon02 = Pokemon.fromJson(jsonEncode(pokemonMap));
@@ -133,6 +140,7 @@ void main() {
       specialAttack: specialAttack,
       specialDefense: specialDefense,
       speed: speed,
+      icon: icon,
       sprite: sprite,
     );
 

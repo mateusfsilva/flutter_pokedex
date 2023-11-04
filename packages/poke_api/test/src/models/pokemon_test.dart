@@ -24,6 +24,8 @@ void main() {
   const specialDefense = 65;
   const speedStatName = 'speed';
   const speed = 45;
+  const icon =
+      'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png';
   const sprite =
       'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/1.png';
   const pokemonMap = <String, dynamic>{
@@ -195,6 +197,7 @@ void main() {
       weight: weight,
       stats: stats,
       sprites: Sprites(
+        frontDefault: icon,
         other: Other(
           officialArtwork: OfficialArtwork(frontDefault: sprite),
         ),
@@ -246,6 +249,7 @@ void main() {
       pokemon01.stats.where((s) => s.stat.name == speedStatName).first.baseStat,
       speed,
     );
+    expect(pokemon01.sprites.frontDefault, icon);
     expect(pokemon01.sprites.other.officialArtwork.frontDefault, sprite);
   });
 
@@ -260,6 +264,7 @@ void main() {
       weight: weight,
       stats: stats,
       sprites: Sprites(
+        frontDefault: icon,
         other: Other(
           officialArtwork: OfficialArtwork(frontDefault: sprite),
         ),
@@ -281,6 +286,7 @@ void main() {
       weight: weight,
       stats: stats,
       sprites: Sprites(
+        frontDefault: icon,
         other: Other(
           officialArtwork: OfficialArtwork(frontDefault: sprite),
         ),

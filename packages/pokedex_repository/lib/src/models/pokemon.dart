@@ -14,6 +14,7 @@ class Pokemon with EquatableMixin {
     required this.specialAttack,
     required this.specialDefense,
     required this.speed,
+    required this.icon,
     required this.sprite,
   });
 
@@ -39,6 +40,7 @@ class Pokemon with EquatableMixin {
         specialAttack: pick('special_attack').asIntOrThrow(),
         specialDefense: pick('special_defense').asIntOrThrow(),
         speed: pick('speed').asIntOrThrow(),
+        icon: pick('icon').asStringOrThrow(),
         sprite: pick('sprite').asStringOrThrow(),
       );
 
@@ -53,6 +55,7 @@ class Pokemon with EquatableMixin {
   final int specialAttack;
   final int specialDefense;
   final int speed;
+  final String icon;
   final String sprite;
 
   Map<String, dynamic> toMap() => {
@@ -67,6 +70,7 @@ class Pokemon with EquatableMixin {
         'special_attack': specialAttack,
         'special_defense': specialDefense,
         'speed': speed,
+        'icon': icon,
         'sprite': sprite,
       };
 
@@ -83,6 +87,7 @@ class Pokemon with EquatableMixin {
         specialAttack,
         specialDefense,
         speed,
+        icon,
         sprite,
       ];
 }

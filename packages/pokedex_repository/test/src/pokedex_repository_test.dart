@@ -44,6 +44,8 @@ void main() {
       const specialAttack = 65;
       const specialDefense = 65;
       const speed = 45;
+      const icon =
+          'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png';
       const sprite =
           'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/1.png';
 
@@ -189,6 +191,7 @@ void main() {
         );
         when(() => pokemon.sprites).thenReturn(
           poke_api_client.Sprites(
+            frontDefault: icon,
             other: poke_api_client.Other(
               officialArtwork:
                   poke_api_client.OfficialArtwork(frontDefault: sprite),
@@ -228,6 +231,7 @@ void main() {
                 specialAttack: specialAttack,
                 specialDefense: specialDefense,
                 speed: speed,
+                icon: icon,
                 sprite: sprite,
               ),
             ],
