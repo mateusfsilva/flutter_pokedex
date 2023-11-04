@@ -27,11 +27,7 @@ class Pokemon with EquatableMixin {
   factory Pokemon.fromPick(RequiredPick pick) => Pokemon(
         id: pick('id').asIntOrThrow(),
         name: pick('name').asStringOrThrow(),
-        types: pick('types').asListOrThrow(
-          (pick) => PokemonType.fromValue(
-            pick.asStringOrThrow(),
-          ),
-        ),
+        types: pick('types').asListOrThrow(PokemonType.fromPick),
         height: pick('height').asIntOrThrow(),
         weight: pick('weight').asIntOrThrow(),
         hp: pick('hp').asIntOrThrow(),
@@ -117,6 +113,9 @@ enum PokemonType {
   const PokemonType(this.value);
 
   final String value;
+
+  factory PokemonType.fromPick(RequiredPick pick) =>
+      PokemonType.fromValue(pick.asStringOrThrow());
 
   factory PokemonType.fromValue(String value) => PokemonType.values.firstWhere(
         (type) => type.value == value,

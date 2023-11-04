@@ -16,15 +16,11 @@ class Pokedex with EquatableMixin {
 
   factory Pokedex.fromPick(RequiredPick pick) => Pokedex(
         total: pick('total').asIntOrThrow(),
-        pokemons: pick('pokemons').asListOrEmpty(
-          (pick) => Pokemon.fromPick(pick),
-        ),
+        pokemons: pick('pokemons').asListOrEmpty(Pokemon.fromPick),
       );
 
   final int total;
   final List<Pokemon> pokemons;
-
-  bool get completed => pokemons.length == total;
 
   Map<String, dynamic> toMap() => {
         'total': total,

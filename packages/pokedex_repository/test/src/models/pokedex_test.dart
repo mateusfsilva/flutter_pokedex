@@ -17,6 +17,8 @@ void main() {
   const specialAttack = 65;
   const specialDefense = 65;
   const speed = 45;
+  const icon =
+      'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png';
   const sprite =
       'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/1.png';
   const pokemonMap = <String, dynamic>{
@@ -24,6 +26,7 @@ void main() {
     'id': id,
     'name': name,
     'sprite': sprite,
+    'icon': icon,
     'hp': hp,
     'attack': attack,
     'defense': defense,
@@ -81,14 +84,5 @@ void main() {
     );
 
     expect(pokedex01.toMap(), pokedexMap);
-  });
-
-  test('Test completed property', () {
-    final pokedex01 = Pokedex(
-      total: total,
-      pokemons: [pokemon01],
-    );
-
-    expect(pokedex01.completed, false);
   });
 }

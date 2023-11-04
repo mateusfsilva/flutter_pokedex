@@ -14,11 +14,11 @@ class Pokemon with EquatableMixin {
     required this.types,
   });
 
-  factory Pokemon.fromJson(String json) =>
-      Pokemon.fromPick(pickFromJson(json).required());
-
   factory Pokemon.fromMap(Map<String, dynamic> map) =>
       Pokemon.fromPick(pick(map).required());
+
+  factory Pokemon.fromJson(String json) =>
+      Pokemon.fromPick(pickFromJson(json).required());
 
   factory Pokemon.fromPick(RequiredPick pick) => Pokemon(
         id: pick('id').asIntOrThrow(),
@@ -28,10 +28,8 @@ class Pokemon with EquatableMixin {
         height: pick('height').asIntOrThrow(),
         weight: pick('weight').asIntOrThrow(),
         sprites: Sprites.fromPick(pick('sprites').required()),
-        stats: pick('stats').asListOrThrow(
-          (pick) => StatElement.fromPick(pick),
-        ),
-        types: pick('types').asListOrThrow((pick) => Type.fromPick(pick)),
+        stats: pick('stats').asListOrThrow(StatElement.fromPick),
+        types: pick('types').asListOrThrow(Type.fromPick),
       );
 
   final int id;
