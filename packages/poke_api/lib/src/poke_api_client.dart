@@ -51,9 +51,9 @@ class PokeApiClient {
 
   /// Get the info on the specified Pokemon.
   Future<Pokemon> getPokemon({
-    required int id,
+    required String name,
   }) async {
-    final request = Uri.https(_baseURL, '/api/v2/pokemon/$id/');
+    final request = Uri.https(_baseURL, '/api/v2/pokemon/$name/');
 
     final response = await _httpClient.get(request);
 

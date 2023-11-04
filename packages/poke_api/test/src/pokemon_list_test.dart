@@ -308,12 +308,12 @@ void main() {
       when(() => response.body).thenReturn('{}');
 
       try {
-        await apiClient.getPokemon(id: id);
+        await apiClient.getPokemon(name: name);
       } catch (_) {}
 
       verify(
         () => httpClient.get(
-          Uri.https('pokeapi.co', '/api/v2/pokemon/$id/'),
+          Uri.https('pokeapi.co', '/api/v2/pokemon/$name/'),
         ),
       ).called(1);
     });
@@ -322,7 +322,7 @@ void main() {
       when(() => response.statusCode).thenReturn(200);
       when(() => response.body).thenReturn(jsonEncode(pokemonMap));
 
-      final result = await apiClient.getPokemon(id: id);
+      final result = await apiClient.getPokemon(name: name);
 
       expect(
         result,
@@ -396,7 +396,7 @@ void main() {
       when(() => response.statusCode).thenReturn(400);
 
       expect(
-        () async => apiClient.getPokemon(id: id),
+        () async => apiClient.getPokemon(name: name),
         throwsA(isA<PokemonRequestFailure>()),
       );
     });
@@ -406,7 +406,7 @@ void main() {
       when(() => response.body).thenReturn('{}');
 
       expect(
-        () async => apiClient.getPokemon(id: id),
+        () async => apiClient.getPokemon(name: name),
         throwsA(isA<PokemonNotFoundFailure>()),
       );
     });
