@@ -106,7 +106,7 @@ packages:
     source: hosted
     version: "3.0.3"
   deep_pick:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: deep_pick
       sha256: ba19f93cae54e5d601c0d2c11f873bf0038fc6207cc7ab23115f4a5873bb917f
@@ -122,7 +122,7 @@ packages:
     source: hosted
     version: "0.4.1"
   equatable:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: equatable
       sha256: c2b87cb7756efdf69892005af546c56c0b5037f54d2a88269b4f347a505e3ca2
@@ -184,6 +184,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.2"
+  hive:
+    dependency: transitive
+    description:
+      name: hive
+      sha256: "8dcf6db979d7933da8217edcec84e9df1bdb4e4edc7fc77dbd5aa74356d6d941"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.2.3"
   http:
     dependency: transitive
     description:
@@ -208,6 +216,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "4.0.2"
+  hydrated_bloc:
+    dependency: "direct main"
+    description:
+      name: hydrated_bloc
+      sha256: "24994e61f64904d911683cce1a31dc4ef611619da5253f1de2b7b8fc6f79a118"
+      url: "https://pub.dev"
+    source: hosted
+    version: "9.1.2"
   intl:
     dependency: "direct main"
     description:
@@ -443,6 +459,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.2.0"
+  synchronized:
+    dependency: transitive
+    description:
+      name: synchronized
+      sha256: "5fcbd27688af6082f5abd611af56ee575342c30e87541d0245f7ff99faa02c60"
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.1.0"
   term_glyph:
     dependency: transitive
     description:
