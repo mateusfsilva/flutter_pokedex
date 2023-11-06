@@ -16,10 +16,11 @@ class PokedexRepository {
   List<Pokemon> pokemons = [];
 
   Future<Pokedex> getPokemons({
+    int offset = 0,
     int limit = 20,
   }) async {
     final result = await _pokeApiClient.pokemonsList(
-      offset: pokemons.length,
+      offset: offset,
       limit: limit,
     );
 
@@ -31,7 +32,7 @@ class PokedexRepository {
       pokemons.add(
         Pokemon(
           id: poke.id,
-          name: poke.name,
+          name: poke.name.toTitleCase(),
           types: poke.types
               .map(
                 (type) => PokemonType.fromValue(type.type.name),
@@ -68,4 +69,14 @@ class PokedexRepository {
 
     return Pokedex(total: total, pokemons: pokemons);
   }
+}
+
+extension on String {
+  String toCapitalized() =>
+      length > 0 ? '${this[0].toUpperCase()}${substring(1).toLowerCase()}' : '';
+
+  String toTitleCase() => replaceAll(RegExp(' +'), ' ')
+      .split(' ')
+      .map((str) => str.toCapitalized())
+      .join(' ');
 }

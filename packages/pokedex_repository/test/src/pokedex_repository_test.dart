@@ -27,7 +27,7 @@ void main() {
       });
     });
 
-    group('getWeather', () {
+    group('pokemonsList', () {
       const count = 3;
       const pokemon01 = 'charmander';
       const url01 = 'https://pokeapi.co/api/v2/pokemon/4/';
@@ -218,7 +218,7 @@ void main() {
             pokemons: [
               Pokemon(
                 id: id,
-                name: name,
+                name: 'Bulbasaur',
                 types: [
                   PokemonType.fromValue(type01),
                   PokemonType.fromValue(type02),
