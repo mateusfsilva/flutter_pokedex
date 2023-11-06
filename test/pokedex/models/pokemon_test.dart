@@ -173,7 +173,7 @@ void main() {
         pokemon.sprite,
         'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/4.png',
       );
-      expect(pokemon.favorite, true);
+      expect(pokemon.favorite, false);
     });
 
     test('copy name', () {
@@ -198,7 +198,7 @@ void main() {
         pokemon.sprite,
         'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/4.png',
       );
-      expect(pokemon.favorite, true);
+      expect(pokemon.favorite, false);
     });
 
     test('copy types', () {
@@ -223,7 +223,7 @@ void main() {
         pokemon.sprite,
         'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/4.png',
       );
-      expect(pokemon.favorite, true);
+      expect(pokemon.favorite, false);
     });
 
     test('copy height', () {
@@ -248,7 +248,7 @@ void main() {
         pokemon.sprite,
         'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/4.png',
       );
-      expect(pokemon.favorite, true);
+      expect(pokemon.favorite, false);
     });
 
     test('copy weight', () {
@@ -273,7 +273,7 @@ void main() {
         pokemon.sprite,
         'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/4.png',
       );
-      expect(pokemon.favorite, true);
+      expect(pokemon.favorite, false);
     });
 
     test('copy hp', () {
@@ -298,7 +298,7 @@ void main() {
         pokemon.sprite,
         'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/4.png',
       );
-      expect(pokemon.favorite, true);
+      expect(pokemon.favorite, false);
     });
 
     test('copy attack', () {
@@ -323,7 +323,7 @@ void main() {
         pokemon.sprite,
         'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/4.png',
       );
-      expect(pokemon.favorite, true);
+      expect(pokemon.favorite, false);
     });
 
     test('copy defense', () {
@@ -348,7 +348,7 @@ void main() {
         pokemon.sprite,
         'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/4.png',
       );
-      expect(pokemon.favorite, true);
+      expect(pokemon.favorite, false);
     });
 
     test('copy specialAttack', () {
@@ -373,7 +373,7 @@ void main() {
         pokemon.sprite,
         'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/4.png',
       );
-      expect(pokemon.favorite, true);
+      expect(pokemon.favorite, false);
     });
 
     test('copy specialDefense', () {
@@ -398,7 +398,7 @@ void main() {
         pokemon.sprite,
         'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/4.png',
       );
-      expect(pokemon.favorite, true);
+      expect(pokemon.favorite, false);
     });
 
     test('copy speed', () {
@@ -423,7 +423,7 @@ void main() {
         pokemon.sprite,
         'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/4.png',
       );
-      expect(pokemon.favorite, true);
+      expect(pokemon.favorite, false);
     });
 
     test('copy icon', () {
@@ -451,7 +451,7 @@ void main() {
         pokemon.sprite,
         'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/4.png',
       );
-      expect(pokemon.favorite, true);
+      expect(pokemon.favorite, false);
     });
 
     test('copy sprite', () {
@@ -479,11 +479,11 @@ void main() {
         pokemon.sprite,
         'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/30.png',
       );
-      expect(pokemon.favorite, true);
+      expect(pokemon.favorite, false);
     });
 
     test('copy favorite', () {
-      final pokemon = pokemon02.copyWith(favorite: false);
+      final pokemon = pokemon02.copyWith(favorite: true);
 
       expect(pokemon.id, 4);
       expect(pokemon.name, 'Charmander');
@@ -504,7 +504,7 @@ void main() {
         pokemon.sprite,
         'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/4.png',
       );
-      expect(pokemon.favorite, false);
+      expect(pokemon.favorite, true);
     });
   });
 

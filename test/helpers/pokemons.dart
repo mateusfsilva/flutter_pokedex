@@ -53,7 +53,7 @@ final pokemon02 = Pokemon(
       'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/4.png',
   sprite:
       'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/4.png',
-  favorite: true,
+  favorite: false,
 );
 
 const pokemonMap = <String, dynamic>{
