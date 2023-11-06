@@ -23,10 +23,12 @@ class PokedexAppView extends StatelessWidget {
   const PokedexAppView({super.key});
 
   @override
-  Widget build(BuildContext context) => const MaterialApp(
+  Widget build(BuildContext context) => MaterialApp(
         localizationsDelegates: AppLocalizations.localizationsDelegates,
         supportedLocales: AppLocalizations.supportedLocales,
-        home: PokemonsPage(),
+        home: PokemonsPage.page(
+          pokedexRepository: context.read<PokedexRepository>(),
+        ),
         debugShowCheckedModeBanner: false,
       );
 }

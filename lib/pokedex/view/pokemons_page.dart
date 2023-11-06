@@ -9,21 +9,26 @@ import 'package:pokedex_repository/pokedex_repository.dart';
 class PokemonsPage extends StatelessWidget {
   const PokemonsPage({super.key});
 
+  static Widget page({
+    required PokedexRepository pokedexRepository,
+  }) =>
+      BlocProvider<PokedexCubit>(
+        create: (_) => PokedexCubit(pokedexRepository)..getPokedex(),
+        child: const PokemonsPage(),
+      );
+
   @override
-  Widget build(BuildContext context) => BlocProvider(
-        create: (_) => PokedexCubit(PokedexRepository())..getPokedex(),
-        child: Scaffold(
-          appBar: AppBar(
-            title: Text(
-              context.l10n.pokedexAppBarTitle,
-            ),
-            actions: const [
-              FavoriteOrder(),
-            ],
+  Widget build(BuildContext context) => Scaffold(
+        appBar: AppBar(
+          title: Text(
+            context.l10n.pokedexAppBarTitle,
           ),
-          body: const SafeArea(
-            child: PokemonsList(),
-          ),
+          actions: const [
+            FavoriteOrder(),
+          ],
+        ),
+        body: const SafeArea(
+          child: PokemonsList(),
         ),
       );
 }
