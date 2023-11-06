@@ -23,7 +23,7 @@ void main() {
 
     final pokemon01 = pokedex_repository.Pokemon(
       id: 1,
-      name: 'bulbasaur',
+      name: 'Bulbasaur',
       types: [
         pokedex_repository.PokemonType.grass,
         pokedex_repository.PokemonType.poison,
@@ -88,7 +88,10 @@ void main() {
       when(() => pokedex.pokemons)
           .thenReturn([pokemon01, pokemon02, pokemon03]);
       when(
-        () => pokedexRepository.getPokemons(limit: any(named: 'limit')),
+        () => pokedexRepository.getPokemons(
+          offset: any(named: 'offset'),
+          limit: any(named: 'limit'),
+        ),
       ).thenAnswer((_) async => pokedex);
 
       pokedexCubit = PokedexCubit(pokedexRepository);
@@ -114,6 +117,20 @@ void main() {
       );
     });
 
+    test('remove duplicates records from an array', () {
+      var pokemons = [
+        Pokemon.fromRepository(pokemon01),
+        Pokemon.fromRepository(pokemon01),
+        Pokemon.fromRepository(pokemon02),
+      ];
+
+      pokemons = pokemons.unique((p) => p.id, false);
+
+      expect(pokemons.length, 2);
+      expect(pokemons.first.id, 1);
+      expect(pokemons.last.id, 4);
+    });
+
     group('toJson/fromJson', () {
       test('work properly', () {
         final pokedexCubit = PokedexCubit(pokedexRepository);
@@ -136,8 +153,6 @@ void main() {
             completed: false,
             pokemons: [
               Pokemon.fromRepository(pokemon01),
-              Pokemon.fromRepository(pokemon02),
-              Pokemon.fromRepository(pokemon03),
             ],
           ),
         ),
@@ -147,13 +162,10 @@ void main() {
             status: PokedexStatus.success,
             pokedex: Pokedex(
               orderBy: PokedexOrder.id,
-              completed: false,
+              completed: true,
               pokemons: [
                 Pokemon.fromRepository(pokemon01),
-                Pokemon.fromRepository(pokemon01),
                 Pokemon.fromRepository(pokemon02),
-                Pokemon.fromRepository(pokemon02),
-                Pokemon.fromRepository(pokemon03),
                 Pokemon.fromRepository(pokemon03),
               ],
             ),
@@ -245,7 +257,12 @@ void main() {
         ),
         act: (cubit) => cubit.loadMore(),
         verify: (_) {
-          verify(() => pokedexRepository.getPokemons()).called(1);
+          verify(
+            () => pokedexRepository.getPokemons(
+              offset: any(named: 'offset'),
+              limit: any(named: 'limit'),
+            ),
+          ).called(1);
         },
       );
 
@@ -253,7 +270,10 @@ void main() {
         'emits nothing when exception is thrown',
         setUp: () {
           when(
-            () => pokedexRepository.getPokemons(),
+            () => pokedexRepository.getPokemons(
+              offset: any(named: 'offset'),
+              limit: any(named: 'limit'),
+            ),
           ).thenThrow(Exception('oops'));
         },
         build: () => pokedexCubit,
@@ -310,53 +330,53 @@ void main() {
               ),
         ],
       );
-    });
 
-    blocTest<PokedexCubit, PokedexState>(
-      'emits updated pokedex ordering by favorites',
-      build: () => pokedexCubit,
-      setUp: () {
-        when(() => pokedex.pokemons).thenReturn([
-          pokemon03,
-          pokemon01,
-        ]);
-      },
-      seed: () => PokedexState(
-        status: PokedexStatus.success,
-        pokedex: Pokedex(
-          orderBy: PokedexOrder.favorites,
-          completed: false,
-          pokemons: [
-            Pokemon.fromRepository(pokemon02).copyWith(favorite: true),
-          ],
+      blocTest<PokedexCubit, PokedexState>(
+        'emits updated pokedex ordering by favorites',
+        build: () => pokedexCubit,
+        setUp: () {
+          when(() => pokedex.pokemons).thenReturn([
+            pokemon03,
+            pokemon01,
+          ]);
+        },
+        seed: () => PokedexState(
+          status: PokedexStatus.success,
+          pokedex: Pokedex(
+            orderBy: PokedexOrder.favorites,
+            completed: false,
+            pokemons: [
+              Pokemon.fromRepository(pokemon02).copyWith(favorite: true),
+            ],
+          ),
         ),
-      ),
-      act: (cubit) => cubit.loadMore(),
-      expect: () => <Matcher>[
-        isA<PokedexState>()
-            .having((w) => w.status, 'status', PokedexStatus.success)
-            .having(
-              (state) => state.pokedex,
-              'pokedex',
-              isA<Pokedex>()
-                  .having(
-                    (pokedex) => pokedex.orderBy,
-                    'orderBy',
-                    PokedexOrder.favorites,
-                  )
-                  .having((pokedex) => pokedex.completed, 'completed', true)
-                  .having(
-                (pokedex) => pokedex.pokemons,
-                'pokemons',
-                [
-                  Pokemon.fromRepository(pokemon02).copyWith(favorite: true),
-                  Pokemon.fromRepository(pokemon01),
-                  Pokemon.fromRepository(pokemon03),
-                ],
+        act: (cubit) => cubit.loadMore(),
+        expect: () => <Matcher>[
+          isA<PokedexState>()
+              .having((w) => w.status, 'status', PokedexStatus.success)
+              .having(
+                (state) => state.pokedex,
+                'pokedex',
+                isA<Pokedex>()
+                    .having(
+                      (pokedex) => pokedex.orderBy,
+                      'orderBy',
+                      PokedexOrder.favorites,
+                    )
+                    .having((pokedex) => pokedex.completed, 'completed', true)
+                    .having(
+                  (pokedex) => pokedex.pokemons,
+                  'pokemons',
+                  [
+                    Pokemon.fromRepository(pokemon02).copyWith(favorite: true),
+                    Pokemon.fromRepository(pokemon01),
+                    Pokemon.fromRepository(pokemon03),
+                  ],
+                ),
               ),
-            ),
-      ],
-    );
+        ],
+      );
+    });
 
     group('orderBy', () {
       blocTest<PokedexCubit, PokedexState>(
@@ -451,6 +471,40 @@ void main() {
               pokemons: [
                 Pokemon.fromRepository(pokemon01),
                 Pokemon.fromRepository(pokemon02).copyWith(favorite: true),
+                Pokemon.fromRepository(pokemon03),
+              ],
+            ),
+          ),
+        ],
+      );
+
+      blocTest<PokedexCubit, PokedexState>(
+        'emits updated pokemon '
+        'when id is found '
+        'ordered by favorites',
+        build: () => pokedexCubit,
+        seed: () => PokedexState(
+          status: PokedexStatus.success,
+          pokedex: Pokedex(
+            orderBy: PokedexOrder.favorites,
+            completed: false,
+            pokemons: [
+              Pokemon.fromRepository(pokemon01),
+              Pokemon.fromRepository(pokemon02),
+              Pokemon.fromRepository(pokemon03),
+            ],
+          ),
+        ),
+        act: (cubit) => cubit.toggleFavorite(pokemonID: 4),
+        expect: () => <PokedexState>[
+          PokedexState(
+            status: PokedexStatus.success,
+            pokedex: Pokedex(
+              orderBy: PokedexOrder.favorites,
+              completed: false,
+              pokemons: [
+                Pokemon.fromRepository(pokemon02).copyWith(favorite: true),
+                Pokemon.fromRepository(pokemon01),
                 Pokemon.fromRepository(pokemon03),
               ],
             ),

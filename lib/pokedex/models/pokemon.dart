@@ -49,7 +49,7 @@ class Pokemon with EquatableMixin {
   factory Pokemon.fromRepository(pokedex_repository.Pokemon pokemon) => Pokemon(
         id: pokemon.id,
         name: pokemon.name,
-        types: pokemon.types.map(_getTypeFromRepository).toList(),
+        types: pokemon.types.map(getTypeFromRepository).toList(),
         height: pokemon.height,
         weight: pokemon.weight,
         hp: pokemon.hp,
@@ -128,7 +128,7 @@ class Pokemon with EquatableMixin {
         favorite: favorite ?? this.favorite,
       );
 
-  static PokemonType _getTypeFromRepository(
+  static PokemonType getTypeFromRepository(
     pokedex_repository.PokemonType type,
   ) {
     switch (type) {

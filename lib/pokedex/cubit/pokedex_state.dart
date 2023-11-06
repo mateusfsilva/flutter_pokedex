@@ -48,4 +48,16 @@ final class PokedexState extends Equatable {
         status,
         pokedex,
       ];
+
+  @override
+  String toString() => '''
+PokedexState(
+  status: $status,
+  pokedex: Pokedex(
+    orderBy: ${pokedex.orderBy},
+    completed: ${pokedex.completed},
+    pokemons: ${pokedex.pokemons.map((p) => "${p.id}-${p.name}").join(", ")},
+  ),
+)
+''';
 }

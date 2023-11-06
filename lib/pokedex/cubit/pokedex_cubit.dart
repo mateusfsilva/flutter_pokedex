@@ -24,7 +24,9 @@ class PokedexCubit extends HydratedCubit<PokedexState> {
 
     try {
       final pokedex = Pokedex.fromRepository(
-        await _pokedexRepository.getPokemons(),
+        await _pokedexRepository.getPokemons(
+          offset: state.pokedex.pokemons.length,
+        ),
       );
 
       pokedex.pokemons.sort(_sortByID);
@@ -45,11 +47,16 @@ class PokedexCubit extends HydratedCubit<PokedexState> {
     if (!state.status.isSuccess) return;
 
     try {
-      final result = await _pokedexRepository.getPokemons();
+      final result = await _pokedexRepository.getPokemons(
+        offset: state.pokedex.pokemons.length,
+        limit: 10,
+      );
       final totalPokemons = result.total;
       final pokedex = Pokedex.fromRepository(result);
       final pokemons = List<Pokemon>.from(state.pokedex.pokemons)
         ..addAll(pokedex.pokemons);
+
+      pokemons.unique((pokemon) => pokemon.id);
 
       if (state.pokedex.orderBy == PokedexOrder.favorites) {
         pokemons.sort(_sortByFavorites);
@@ -106,6 +113,12 @@ class PokedexCubit extends HydratedCubit<PokedexState> {
 
       pokemons[pokemonIndex] = pokemon.copyWith(favorite: !pokemon.favorite);
 
+      if (state.pokedex.orderBy == PokedexOrder.favorites) {
+        pokemons.sort(_sortByFavorites);
+      } else {
+        pokemons.sort(_sortByID);
+      }
+
       emit(
         PokedexState(
           status: state.status,
@@ -136,4 +149,16 @@ class PokedexCubit extends HydratedCubit<PokedexState> {
 
   @override
   Map<String, dynamic>? toJson(PokedexState state) => state.toMap();
+}
+
+extension Unique<E, Id> on List<E> {
+  List<E> unique([Id Function(E element)? id, bool inplace = true]) {
+    final ids = <dynamic>{};
+
+    final list = inplace ? this : List<E>.from(this);
+
+    list.retainWhere((x) => ids.add(id != null ? id(x) : x as Id));
+
+    return list;
+  }
 }
