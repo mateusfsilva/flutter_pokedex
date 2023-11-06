@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_pokedex/l10n/l10n.dart';
 import 'package:flutter_pokedex/pokedex/cubit/pokedex_cubit.dart';
 import 'package:flutter_pokedex/pokedex/models/models.dart';
 
@@ -11,8 +12,8 @@ class FavoriteOrder extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Row(
         children: [
-          const Text(
-            'Favoritos primeiro',
+          Text(
+            context.l10n.pokedexOrderByFavorites,
           ),
           const SizedBox(
             width: 8.0,

@@ -1,7 +1,36 @@
 {
-    "@@locale": "en",
-    "counterAppBarTitle": "Counter",
-    "@counterAppBarTitle": {
-        "description": "Text shown in the AppBar of the Counter Page"
+  "@@locale": "en",
+  "@@author": "Mateus Freitas",
+  "pokedexAppBarTitle": "Pokédex",
+  "pokedexFailedToFetchPokemons": "Failed to fetch Pokemons.",
+  "pokedexNoPokemonFound": "No Pokemon found 😢.",
+  "pokedexOrderByFavorites": "Favorites first",
+  "pokemonIconSemanticLabel": "{pokemonName} image",
+  "@pokemonIconSemanticLabel": {
+    "placeholders": {
+      "pokemonName": {
+        "type": "String"
+      }
     }
+  },
+  "pokemonTypeBug": "Bug",
+  "pokemonTypeDark": "Dark",
+  "pokemonTypeDragon": "Dragon",
+  "pokemonTypeElectric": "Electric",
+  "pokemonTypeFairy": "Fairy",
+  "pokemonTypeFighting": "Fighting",
+  "pokemonTypeFire": "Fire",
+  "pokemonTypeFlying": "Flying",
+  "pokemonTypeGhost": "Ghost",
+  "pokemonTypeGrass": "Grass",
+  "pokemonTypeGround": "Ground",
+  "pokemonTypeIce": "Ice",
+  "pokemonTypeNormal": "Normal",
+  "pokemonTypePoison": "Poison",
+  "pokemonTypePsychic": "Psychic",
+  "pokemonTypeRock": "Rock",
+  "pokemonTypeShadow": "Shadow",
+  "pokemonTypeSteel": "Steel",
+  "pokemonTypeUnknown": "Unknown",
+  "pokemonTypeWater": "Water"
 }

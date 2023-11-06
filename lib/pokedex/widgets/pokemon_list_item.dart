@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_pokedex/l10n/l10n.dart';
 import 'package:flutter_pokedex/pokedex/pokedex.dart';
 
 class PokemonListItem extends StatelessWidget {
@@ -13,7 +14,10 @@ class PokemonListItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Material(
         child: ListTile(
-          leading: Image.network(pokemon.icon),
+          leading: Image.network(
+            pokemon.icon,
+            semanticLabel: context.l10n.pokemonIconSemanticLabel(pokemon.name),
+          ),
           title: Text(
             pokemon.name,
             style: Theme.of(context).textTheme.titleLarge,

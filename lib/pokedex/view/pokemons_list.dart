@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_pokedex/l10n/l10n.dart';
 import 'package:flutter_pokedex/pokedex/cubit/pokedex_cubit.dart';
 import 'package:flutter_pokedex/pokedex/widgets/widgets.dart';
 
@@ -25,10 +26,18 @@ class _PokemonsListState extends State<PokemonsList> {
         builder: (context, state) {
           switch (state.status) {
             case PokedexStatus.failure:
-              return const Center(child: Text('failed to fetch pokemons'));
+              return Center(
+                child: Text(
+                  context.l10n.pokedexFailedToFetchPokemons,
+                ),
+              );
             case PokedexStatus.success:
               if (state.pokedex.pokemons.isEmpty) {
-                return const Center(child: Text('no pokemons'));
+                return Center(
+                  child: Text(
+                    context.l10n.pokedexNoPokemonFound,
+                  ),
+                );
               } else {
                 return ListView.builder(
                   itemBuilder: (BuildContext context, int index) => index >=

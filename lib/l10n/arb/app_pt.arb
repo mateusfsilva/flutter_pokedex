@@ -1,0 +1,36 @@
+{
+    "@@locale": "pt",
+    "@@author": "Mateus Freitas",
+    "pokedexAppBarTitle": "Pokédex",
+    "pokedexFailedToFetchPokemons": "Falaha ao carregar os Pokemons.",
+    "pokedexNoPokemonFound": "Nenhum Pokemon encontrado 😢.",
+    "pokedexOrderByFavorites": "Favoritos primeiro",
+    "pokemonIconSemanticLabel": "imagem do {pokemonName}",
+    "@pokemonIconSemanticLabel": {
+      "placeholders": {
+        "pokemonName": {
+          "type": "String"
+        }
+      }
+    },
+    "pokemonTypeBug": "Inseto",
+    "pokemonTypeDark": "Noturno",
+    "pokemonTypeDragon": "Dragão",
+    "pokemonTypeElectric": "Elétrico",
+    "pokemonTypeFairy": "Fada",
+    "pokemonTypeFighting": "Lutador",
+    "pokemonTypeFire": "Fogo",
+    "pokemonTypeFlying": "Voador",
+    "pokemonTypeGhost": "Fantasma",
+    "pokemonTypeGrass": "Grama",
+    "pokemonTypeGround": "Terrestre",
+    "pokemonTypeIce": "Gelo",
+    "pokemonTypeNormal": "Normal",
+    "pokemonTypePoison": "Venenoso",
+    "pokemonTypePsychic": "Psíquico",
+    "pokemonTypeRock": "Pedra",
+    "pokemonTypeShadow": "Sombra",
+    "pokemonTypeSteel": "Metal",
+    "pokemonTypeUnknown": "Desconhecido",
+    "pokemonTypeWater": "Água"
+}
