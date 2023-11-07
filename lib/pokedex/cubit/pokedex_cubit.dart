@@ -46,6 +46,8 @@ class PokedexCubit extends HydratedCubit<PokedexState> {
   Future<void> loadMore() async {
     if (!state.status.isSuccess) return;
 
+    emit(state.copyWith(status: PokedexStatus.loadingMore));
+
     try {
       final result = await _pokedexRepository.getPokemons(
         offset: state.pokedex.pokemons.length,
@@ -66,6 +68,7 @@ class PokedexCubit extends HydratedCubit<PokedexState> {
 
       emit(
         state.copyWith(
+          status: PokedexStatus.success,
           pokedex: state.pokedex.copyWith(
             completed: pokemons.length == totalPokemons,
             pokemons: pokemons,

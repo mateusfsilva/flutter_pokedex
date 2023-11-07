@@ -3,11 +3,13 @@ part of 'pokedex_cubit.dart';
 enum PokedexStatus {
   initial,
   loading,
+  loadingMore,
   success,
   failure;
 
   bool get isInitial => this == PokedexStatus.initial;
   bool get isLoading => this == PokedexStatus.loading;
+  bool get isLoadingMore => this == PokedexStatus.loadingMore;
   bool get isSuccess => this == PokedexStatus.success;
   bool get isFailure => this == PokedexStatus.failure;
 }

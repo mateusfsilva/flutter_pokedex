@@ -32,6 +32,7 @@ class _PokemonsListState extends State<PokemonsList> {
                 ),
               );
             case PokedexStatus.success:
+            case PokedexStatus.loadingMore:
               if (state.pokedex.pokemons.isEmpty) {
                 return Center(
                   child: Text(

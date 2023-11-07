@@ -105,6 +105,7 @@ void main() {
         isA<PokedexState>()
             .having((state) => state.status.isInitial, 'isInitial', isTrue)
             .having((state) => state.status.isLoading, 'isLoading', isFalse)
+            .having((state) => state.status.isLoadingMore, 'isSuccess', isFalse)
             .having((state) => state.status.isFailure, 'isFailure', isFalse)
             .having((state) => state.status.isSuccess, 'isSuccess', isFalse)
             .having(
@@ -158,6 +159,16 @@ void main() {
         ),
         act: (cubit) => cubit.getPokedex(),
         expect: () => [
+          PokedexState(
+            status: PokedexStatus.loadingMore,
+            pokedex: Pokedex(
+              orderBy: PokedexOrder.id,
+              completed: false,
+              pokemons: [
+                Pokemon.fromRepository(pokemon01),
+              ],
+            ),
+          ),
           PokedexState(
             status: PokedexStatus.success,
             pokedex: Pokedex(
@@ -290,7 +301,20 @@ void main() {
           ),
         ),
         act: (cubit) => cubit.loadMore(),
-        expect: () => <PokedexState>[],
+        expect: () => <PokedexState>[
+          PokedexState(
+            status: PokedexStatus.loadingMore,
+            pokedex: Pokedex(
+              orderBy: PokedexOrder.id,
+              completed: false,
+              pokemons: [
+                Pokemon.fromRepository(pokemon01),
+                Pokemon.fromRepository(pokemon02),
+                Pokemon.fromRepository(pokemon03),
+              ],
+            ),
+          ),
+        ],
       );
 
       blocTest<PokedexCubit, PokedexState>(
@@ -305,6 +329,7 @@ void main() {
           ),
         ),
         act: (cubit) => cubit.loadMore(),
+        skip: 1,
         expect: () => <Matcher>[
           isA<PokedexState>()
               .having((w) => w.status, 'status', PokedexStatus.success)
@@ -351,6 +376,7 @@ void main() {
           ),
         ),
         act: (cubit) => cubit.loadMore(),
+        skip: 1,
         expect: () => <Matcher>[
           isA<PokedexState>()
               .having((w) => w.status, 'status', PokedexStatus.success)
