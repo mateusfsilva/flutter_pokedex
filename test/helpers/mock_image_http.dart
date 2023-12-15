@@ -14,12 +14,12 @@ R provideMockedNetworkImages<R>(
 ) {
   return HttpOverrides.runZoned(
     body,
-    createHttpClient: (_) => createMockImageHttpClient(_),
+    createHttpClient: (_) => createMockImageHttpClient(),
   );
 }
 
 // Returns a mock HTTP client that responds with an image to all requests.
-FakeHttpClient createMockImageHttpClient(SecurityContext? _) {
+FakeHttpClient createMockImageHttpClient({SecurityContext? securityContext}) {
   final FakeHttpClient client = FakeHttpClient();
   return client;
 }
