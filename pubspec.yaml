@@ -22,7 +22,7 @@ dependencies:
     path: packages/pokedex_repository
 
 dev_dependencies:
-  bloc_test: 9.1.6
+  bloc_test: 9.1.7
   flutter_test:
     sdk: flutter
   lint: 2.3.0
